@@ -50,31 +50,25 @@ function differenceEvenOddWorker(...arr) {
 function averageEvenElementsWorker(...arr) {
   let sumEvenElement = 0;
   let count = 0;
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i] % 2 == 0) {
-      sumEvenElement += arr[i];
-      count++;
+  if (arr.length == 0) {
+    return 0;
+  } else {
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i] % 2 == 0) {
+        sumEvenElement += arr[i];
+        count++;
+      }
     }
   }
   let avg = sumEvenElement / count;
   return avg;
 }
 
-function makeWork(arrOfArr, func) {}
-
-function summElementsWorker(...arr) {
-  let sum = 0;
+function makeWork(arr, func) {
+  let a = [];
   for (let i = 0; i < arr.length; i++) {
-    sum += arr[i];
+    let arrOfArr = arr[i];
+    a.push(func.apply(null, arrOfArr));
   }
-  console.log(sum);
-  return sum;
+  return Math.max.apply(null, a);
 }
-
-function makeWork(arrOfArr, func) {
-  func();
-  let maxWorkerResult = 0;
-}
-
-const arr = [10, 10, 11, 20, 10];
-console.log(makeWork(arr, summElementsWorker));
