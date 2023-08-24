@@ -5,17 +5,15 @@ function Student(name, gender, age) {
   this.marks = [];
 }
 Student.prototype.setSubject = function (subjectName) {
-  this.setSubject = subjectName;
+  this.subject = subjectName;
 };
 Student.prototype.addMarks = function (...marks) {
   if (this.hasOwnProperty("marks") === true) {
-    this.marks = marks;
-  } else {
-    return 0;
+    this.marks.push(...marks);
   }
 };
 Student.prototype.getAverage = function () {
-  if (this.hasOwnProperty("marks") === true || this.marks.length == 0) {
+  if (this.hasOwnProperty("marks") === true && this.marks.length !== 0) {
     let sum = this.marks.reduce(
       (accumulator, currentValue) => accumulator + currentValue,
       0
@@ -27,7 +25,7 @@ Student.prototype.getAverage = function () {
 };
 
 Student.prototype.exclude = function (reason) {
-  this.exclude = reason;
+  this.excluded = reason;
   delete this.marks;
-  delete this.setSubject;
+  delete this.subject;
 };
