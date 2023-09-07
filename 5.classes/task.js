@@ -13,15 +13,15 @@ class PrintEditionItem {
   }
   set newState(newStatus) {
     if (newStatus < 0) {
-      return (this._state = 0);
+      return (this.state = 0);
     } else if (newStatus > 100) {
-      return (this._state = 100);
+      return (this.state = 100);
     } else {
       return (this.state = newStatus);
     }
   }
   get newState() {
-    return this._state;
+    return this.state;
   }
 }
 
@@ -68,16 +68,16 @@ class Library {
     this.books = [];
   }
 
-  addBook(Book) {
-    if (Book.state > 30) {
-      this.books.push(Book);
+  addBook(book) {
+    if (book.state > 30) {
+      this.books.push(book);
     }
   }
 
-  findBookBy(value) {
-    Object.entries(library.books.includes(value));
-    return library.books.name;
+  static findBookBy(type, value) {
+    
+    return this.books.find();
   }
 
-  giveBookByName(bookName) {}
+  //   giveBookByName(bookName) {}
 }
