@@ -13,15 +13,15 @@ class PrintEditionItem {
   }
   set newState(newStatus) {
     if (newStatus < 0) {
-      return (this.state = 0);
+      return (this._state = 0);
     } else if (newStatus > 100) {
-      return (this.state = 100);
+      return (this._state = 100);
     } else {
-      return (this.state = newStatus);
+      return (this._state = newStatus);
     }
   }
   get newState() {
-    return this.state;
+    return this._state;
   }
 }
 
@@ -74,10 +74,12 @@ class Library {
     }
   }
 
-  static findBookBy(type, value) {
-    
-    return this.books.find();
+  findBookBy(type, value) {
+    return this.books.find((book) => book[type] === value) 
   }
 
-  //   giveBookByName(bookName) {}
+  giveBookByName(bookName) {
+    let a=this.books.indexOf(this.books.find((book) => book["name"] === bookName));
+    this.books.splice(a,1)
+  }
 }
