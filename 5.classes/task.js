@@ -75,11 +75,13 @@ class Library {
   }
 
   findBookBy(type, value) {
-    return this.books.find((book) => book[type] === value) 
+    return this.books.find((book) => book[type] === value);
   }
 
   giveBookByName(bookName) {
-    let a=this.books.indexOf(this.books.find((book) => book["name"] === bookName));
-    this.books.splice(a,1)
+    let a = this.books.indexOf(
+      this.books.find((book) => book["name"] === bookName)
+    );
+    this.books.splice(a, 1);
   }
 }
