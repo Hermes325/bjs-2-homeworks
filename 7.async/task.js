@@ -10,9 +10,9 @@ class AlarmClock {
     this.alarmCollection.push([time, callback]);
   }
   getCurrentFormattedTime() {
-    let newDate = new Date();
-    let hours = newDate.getHours();
-    let minutes = newDate.getHours();
+    let now = new Date();
+    let hours = now.getHours();
+    let minutes = now.getMinutes();
     return `Текущее время: ${hours}:${minutes}`;
   }
 
@@ -25,7 +25,7 @@ class AlarmClock {
     return this;
   }
 }
-
+ 
 // addClock(time) {
 //     // if (hours > 23 || minutes > 59 || ((minutes || hours) < 0)) {
 //     //   console.log("не то");
