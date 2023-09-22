@@ -3,11 +3,12 @@ class AlarmClock {
     this.alarmCollection = [];
     this.intervalId;
   }
-  addClock(time, callback) {
+  addClock(time) {
     if (this.alarmCollection.includes(time) === true) {
       console.warn("Уже присутствует звонок на это же время");
+    } else {
+      this.alarmCollection.push(time);
     }
-    this.alarmCollection.push([time, callback]);
   }
   getCurrentFormattedTime() {
     let now = new Date();
@@ -24,8 +25,13 @@ class AlarmClock {
     }
     return this;
   }
+
+  clearAlarms() {
+    this.alarmCollection = [];
+    return this.alarmCollection;
+  }
 }
- 
+
 // addClock(time) {
 //     // if (hours > 23 || minutes > 59 || ((minutes || hours) < 0)) {
 //     //   console.log("не то");
