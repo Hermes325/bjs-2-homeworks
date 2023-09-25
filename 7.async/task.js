@@ -1,41 +1,57 @@
 class AlarmClock {
   constructor() {
     this.alarmCollection = [];
-    this.intervalId;
+    this.intervalId = null;
   }
-  addClock(time) {
-    if (this.alarmCollection.includes(time) === true) {
+  addClock(time, callback) {
+    if (callback == undefined) {
+      throw new Error("Отсутствуют обязательные аргументы");
+    } else if (
+      this.alarmCollection.some(
+        (elem) => elem.time === time && elem.callback == callback
+      )
+    ) {
       console.warn("Уже присутствует звонок на это же время");
     } else {
-      this.alarmCollection.push(time);
+      this.alarmCollection.push({ time, callback, canCall: true });
     }
   }
   getCurrentFormattedTime() {
-    let now = new Date();
-    let hours = now.getHours();
-    let minutes = now.getMinutes();
-    return `Текущее время: ${hours}:${minutes}`;
+    return new Date().toLocaleTimeString("ru-Ru", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  }
+
+  start() {
+    if (this.intervalId != null) {
+      clearInterval(this.intervalId);
+    } else {
+      function shafle() {
+        if (
+          this.alarmCollection.forEach(
+            (elem) => elem.time == this.getCurrentFormattedTime()
+          )
+        ) {
+          this.alarmCollection.forEach((on) => (on.canCall = false));
+          return this.alarmCollection.callback();
+        }
+      }
+      setInterval(shafle, 1000);
+    }
   }
 
   removeClock(time) {
-    // this.alarmCollection.filter((clock) => clock !== time);
-    let index = this.alarmCollection.indexOf(time);
-    if (index !== -1) {
-      this.alarmCollection.splice(index, 1);
-    }
-    return this;
+    this.alarmCollection = this.alarmCollection.filter(
+      (clock) => clock.time != time
+    );
   }
 
   clearAlarms() {
     this.alarmCollection = [];
-    return this.alarmCollection;
+  }
+
+  resetAllCalls() {
+    this.alarmCollection.forEach((off) => (off.canCall = true));
   }
 }
-
-// addClock(time) {
-//     // if (hours > 23 || minutes > 59 || ((minutes || hours) < 0)) {
-//     //   console.log("не то");
-//     // } else {
-//       this.alarmCollection.push(time);
-//     // }
-//   }
