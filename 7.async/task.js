@@ -28,19 +28,22 @@ class AlarmClock {
       clearInterval(this.intervalId);
     } else {
       function shafle() {
-        if (
-          this.alarmCollection.forEach(
-            (elem) => elem.time == this.getCurrentFormattedTime()
-          )
-        ) {
-          this.alarmCollection.forEach((on) => (on.canCall = false));
-          return this.alarmCollection.callback();
-        }
+        // if (
+        //   this.alarmCollection.forEach(
+        //     (elem) => elem.time == this.getCurrentFormattedTime()
+        //   )
+        // ) {
+        //   this.alarmCollection.forEach((on) => (on.canCall = false));
+        //   return this.alarmCollection.callback();
+        // }
       }
       setInterval(shafle, 1000);
     }
   }
-
+  stop() {
+    clearInterval(this.intervalId);
+    this.intervalId = null;
+  }
   removeClock(time) {
     this.alarmCollection = this.alarmCollection.filter(
       (clock) => clock.time != time
