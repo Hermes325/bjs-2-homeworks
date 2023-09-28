@@ -4,18 +4,14 @@ class AlarmClock {
     this.intervalId = null;
   }
   addClock(time, callback) {
-    if (callback == undefined) {
+    if (callback == undefined || time == undefined) {
       throw new Error("Отсутствуют обязательные аргументы");
-    } else if (
-      this.alarmCollection.some(
-        (elem) => elem.time === time && elem.callback == callback
-      )
-    ) {
+    } else if (this.alarmCollection.some((elem) => elem.time === time)) {
       console.warn("Уже присутствует звонок на это же время");
-    } else {
-      this.alarmCollection.push({ time, callback, canCall: true });
     }
+    this.alarmCollection.push({ time, callback, canCall: true });
   }
+
   getCurrentFormattedTime() {
     return new Date().toLocaleTimeString("ru-Ru", {
       hour: "2-digit",
@@ -25,26 +21,26 @@ class AlarmClock {
 
   start() {
     if (this.intervalId != null) {
-      clearInterval(this.intervalId);
-    } else {
-      function shafle() {
-        // if (
-        //   this.alarmCollection.forEach(
-        //     (elem) => elem.time == this.getCurrentFormattedTime()
-        //   )
-        // ) {
-        //   this.alarmCollection.forEach((on) => (on.canCall = false));
-        //   return this.alarmCollection.callback();
-        // }
-      }
-      setInterval(shafle, 1000);
+      return;
     }
+    setInterval(
+      () =>
+        this.alarmCollection.forEach((elem) => {
+          if (elem.time === this.getCurrentFormattedTime() && elem.canCall) {
+            elem.canCall = false;
+            elem.callback();
+          }
+        }),
+      1000
+    );
   }
+
   stop() {
     clearInterval(this.intervalId);
     this.intervalId = null;
   }
   removeClock(time) {
+    stop();
     this.alarmCollection = this.alarmCollection.filter(
       (clock) => clock.time != time
     );
@@ -55,6 +51,6 @@ class AlarmClock {
   }
 
   resetAllCalls() {
-    this.alarmCollection.forEach((off) => (off.canCall = true));
+    this.alarmCollection.forEach((turnOff) => (turnOff.canCall = true));
   }
 }
