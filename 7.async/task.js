@@ -40,7 +40,7 @@ class AlarmClock {
     this.intervalId = null;
   }
   removeClock(time) {
-    stop();
+    this.stop();
     this.alarmCollection = this.alarmCollection.filter(
       (clock) => clock.time != time
     );
